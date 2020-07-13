@@ -44,17 +44,21 @@ private final KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 Encrpyt text with Public key:
 
 ```java
-    public String encryptText(String msg, PublicKey key) {
-        this.cipher.init(Cipher.ENCRYPT_MODE, key);
-        return Base64.encodeBase64String(cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8)));
-    }
+public String encryptText(String msg, PublicKey key) {
+    this.cipher.init(Cipher.ENCRYPT_MODE, key);
+    return Base64.encodeBase64String(cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8)));
+}
 ```
 
 Decypt text with Private key:
 
 ```java
-    public String decryptText(String encMessage, PrivateKey key) {
-        this.cipher.init(Cipher.DECRYPT_MODE, key);
-        return new String(cipher.doFinal(Base64.decodeBase64(encMessage)), StandardCharsets.UTF_8);
-    }
+public String decryptText(String encMessage, PrivateKey key) {
+    this.cipher.init(Cipher.DECRYPT_MODE, key);
+    return new String(cipher.doFinal(Base64.decodeBase64(encMessage)), StandardCharsets.UTF_8);
+}
 ```
+
+See implementation of CryptoService: [Source Code](https://github.com/AppLoidx/rsa-enc-example-spring/blob/master/src/main/java/com/apploidxxx/rsaencexamplespring/service/CryptoService.java)
+
+See controller from this project : [Source Code](https://github.com/AppLoidx/rsa-enc-example-spring/blob/master/src/main/java/com/apploidxxx/rsaencexamplespring/controller/CryptoController.java)
