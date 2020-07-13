@@ -2,9 +2,10 @@
 
 Using standart java encryption API (JCE)
 
-Usage (java 11):
+Usage (java 8):
 ```shell
 git clone https://github.com/AppLoidx/rsa-enc-example-spring.git
+cd rsa-enc-example-spring/
 mvn clean install
 java -jar target/*.jar
 ```
