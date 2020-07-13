@@ -2,6 +2,12 @@
 
 Using standart java encryption API (JCE)
 
+Usage (java 11):
+```shell
+mvn clean install
+java -jar target/*.jar
+```
+
 ## Get public key
 
 To get public key go to the following link:
