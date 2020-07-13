@@ -59,6 +59,42 @@ public String decryptText(String encMessage, PrivateKey key) {
 }
 ```
 
-See implementation of CryptoService: [Source Code](https://github.com/AppLoidx/rsa-enc-example-spring/blob/master/src/main/java/com/apploidxxx/rsaencexamplespring/service/CryptoService.java)
+See implementation of CryptoService: [Source Code](src/main/java/com/apploidxxx/rsaencexamplespring/service/CryptoService.java)
 
-See controller from this project : [Source Code](https://github.com/AppLoidx/rsa-enc-example-spring/blob/master/src/main/java/com/apploidxxx/rsaencexamplespring/controller/CryptoController.java)
+See controller from this project : [Source Code](src/main/java/com/apploidxxx/rsaencexamplespring/controller/CryptoController.java)
+
+## Additional things
+
+Sometimes (in client, for example) you have to get Public Key from param (string).
+
+For do this, you can use the following code:
+```java
+byte[] byteKey = Base64.getDecoder().decode(publicKeyString.getBytes());
+X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+KeyFactory kf = KeyFactory.getInstance("RSA");
+
+PublicKey pk = kf.generatePublic(X509publicKey);
+```
+
+You can see usage of this code in [CryptoController](src/main/java/com/apploidxxx/rsaencexamplespring/controller/CryptoController.java):
+
+
+```java
+/**
+ * @param publicKeyString generated public key in url <code>/encrypt</code>
+ * @param msg             message encrypt
+ * @return encrypted message
+ */
+@SneakyThrows
+@GetMapping("/encrypt")
+public ResponseEntity<String> encrypt(@RequestParam("publicKey") String publicKeyString,
+                                      @RequestParam("msg") String msg) {
+    log.info("Public key is " + publicKeyString);
+    byte[] byteKey = Base64.getDecoder().decode(publicKeyString.getBytes());
+    X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+    KeyFactory kf = KeyFactory.getInstance("RSA");
+
+    PublicKey pk = kf.generatePublic(X509publicKey);
+    return ResponseEntity.ok(cryptoService.encryptText(msg, pk));
+}
+```
