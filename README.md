@@ -32,4 +32,4 @@ which contains **plus**. Each plus from this key will be converted to space in p
 
 `hsdf+asdfasf` -> `hsdf asdfasf`
 
-So, use URL Encoder for avoid this problem in each param in request
+So, use URL Encoder to avoid this problem in each param in request
