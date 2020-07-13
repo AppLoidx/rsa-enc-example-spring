@@ -33,3 +33,28 @@ which contains **plus**. Each plus from this key will be converted to space in p
 `hsdf+asdfasf` -> `hsdf asdfasf`
 
 So, use URL Encoder to avoid this problem in each param in request
+
+## Source code
+Global params:
+```java
+private final Cipher cipher = Cipher.getInstance("RSA");
+private final KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+```
+
+Encrpyt text with Public key:
+
+```java
+    public String encryptText(String msg, PublicKey key) {
+        this.cipher.init(Cipher.ENCRYPT_MODE, key);
+        return Base64.encodeBase64String(cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8)));
+    }
+```
+
+Decypt text with Private key:
+
+```java
+    public String decryptText(String encMessage, PrivateKey key) {
+        this.cipher.init(Cipher.DECRYPT_MODE, key);
+        return new String(cipher.doFinal(Base64.decodeBase64(encMessage)), StandardCharsets.UTF_8);
+    }
+```
